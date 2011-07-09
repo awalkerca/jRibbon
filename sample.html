@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-Strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="author" content="Andrew Walker" />
+        <title>Ribbon Samples</title>
+				    <!--javascript  -->
+	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	    <script type="text/javascript" src="./ribbon.js"></script>
+		<style type="text/css">
+			.widget {
+				background:blue;
+				width:300px;
+				height:50px;
+				margin:0px 0px 30px 100px;
+				padding:20px 0px 0px 0px;
+			}
+			h1{
+				font-size:25px;
+				padding:0;
+				margin:0;
+				width:300px;
+				position:relative;
+			}
+			#ribbon1{background-color: red;}
+			#ribbon2{background-color: green;}
+			#ribbon3{background-color: gray; padding:4px; width:292px;}
+			#ribbon4{background-color: pink;}
+			#ribbon5{background-color: brown;}
+			#ribbon6{background-color: orange;}
+			#widget7{height:100px;}
+			#ribbon7{
+				background-color: CadetBlue;
+				padding:10px;
+				width:278px;
+				border:1px solid black;
+			}
+			
+		</style>
+		<script type="text/javascript">
+			$(function(){	//jquery wrapper
+				$('#ribbon1').ribbon();
+				$('#ribbon2').ribbon({
+					direction: 'down'
+				});
+				$('#ribbon3').ribbon({
+					left_curl:false
+				});	
+				$('#ribbon4').ribbon({
+					right_curl:false
+				});
+				$('#ribbon5').ribbon({
+					triangle_width: 8
+				});
+				$('#ribbon6').ribbon({
+					triangle_width: 25
+				});
+				$('#ribbon7').ribbon();		
+			});
+		</script>
+    </head>
+    <body>
+        <div id="all">
+            <div class="widget" id="widget1">
+				<h1 id="ribbon1">Basic Defaults</h1>
+			</div>
+            <div class="widget" id="widget2">
+				<h1 id="ribbon2">Down-pointing Ribbon</h1>
+			</div>
+            <div class="widget" id="widget3">
+				<h1 id="ribbon3">Only Right, with padding</h1>
+			</div>
+            <div class="widget" id="widget4">
+				<h1 id="ribbon4">Only Left</h1>
+			</div>
+			<div class="widget" id="widget5">
+				<h1 id="ribbon5">Smaller Triangles</h1>
+			</div>
+			<div class="widget" id="widget6">
+				<h1 id="ribbon6">Larger Triangles</h1>
+			</div>
+			<div class="widget" id="widget7">
+				<h1 id="ribbon7">Ribbon contains some padding and a border</h1>
+			</div>
+        </div>
+    </body>
+</html>
