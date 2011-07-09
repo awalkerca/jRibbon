@@ -9,6 +9,11 @@ Required CSS:
 - The element should be positioned relative or absolute.
 - The element should have a background-colour declared.
 
+Optional CSS:
+- define a shadow on the element to provide depth. 
+	The plugin does not add any shadows as to not
+	conflict with existing lighting models.
+
 Default Usage:
 $('{selector}').ribbon();
 
@@ -26,3 +31,8 @@ The default for both is true.
 triangle_width: integer
 This defines the size of the triangle, in pixels.
 The default is 15.
+
+direction: string
+This describes which direction the ribbon should appear to be 
+(with respect to the curled edges).
+The default is 'up'.
