@@ -18,9 +18,9 @@
         var dark_color = darken(color,o.darken_by);
         ribbon.wrap('<div class="rectangle"></div>');	//add container to ribbon to group triangles
         ribbon.parent().css({
-        	position: 'relative',
-        	zIndex: '50',
-        	display: 'inline-block'
+          position: 'relative',
+          zIndex: '50',
+          display: 'inline-block'
         });
     		
     		var corner_css = {
@@ -57,7 +57,7 @@
               'border-color': 'transparent transparent transparent '+ dark_color,
               'top': (o.direction == 'down')? ribbon.position().top - o.triangle_width : ribbon.position().top + parseInt(height) - o.triangle_width,
               'left': ribbon.position().left + width - (o.triangle_width),
-      			},corner_css)  
+            },corner_css)  
           ).appendTo($(ribbon).parent());
         }
       });
