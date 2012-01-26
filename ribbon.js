@@ -10,18 +10,18 @@
     		direction: 'up'
       }, options);
       return this.each(function() {
-    		var o = options;								              //params to be used
-    		var ribbon = $(this);							            //root item to be "ribbon-ed"                
-    		var color = ribbon.css('backgroundColor');	  //background colour of root item
-    		var height = ribbon.outerHeight();			      //height, including any padding, margins and borders		
-    		var width = ribbon.outerWidth();				      //width, including any padding, margins and borders
-    		var dark_color = darken(color,o.darken_by);
-    		ribbon.wrap('<div class="rectangle"></div>');	//add container to ribbon to group triangles
-    		ribbon.parent().css({
-    			position: 'relative',
-    			zIndex: '50',
-    			display: 'inline-block'
-    		});
+        var o = options;								              //params to be used
+        var ribbon = $(this);							            //root item to be "ribbon-ed"                
+        var color = ribbon.css('backgroundColor');	  //background colour of root item
+        var height = ribbon.outerHeight();			      //height, including any padding, margins and borders		
+        var width = ribbon.outerWidth();				      //width, including any padding, margins and borders
+        var dark_color = darken(color,o.darken_by);
+        ribbon.wrap('<div class="rectangle"></div>');	//add container to ribbon to group triangles
+        ribbon.parent().css({
+        	position: 'relative',
+        	zIndex: '50',
+        	display: 'inline-block'
+        });
     		
     		var corner_css = {
       	  'border-style': 'solid',
@@ -32,19 +32,19 @@
       	  'z-index': '-1'
       	};
     		
-    		if ((o.left_curl) && (o.right_curl)){
-    			ribbon.css('width',ribbon.width() + (2*o.triangle_width));
-    			width = ribbon.outerWidth();					    //reset width now that corners are accounted for
-    		}
-    		
+        if ((o.left_curl) && (o.right_curl)){
+          ribbon.css('width',ribbon.width() + (2*o.triangle_width));
+          width = ribbon.outerWidth();					    //reset width now that corners are accounted for
+        }
+
         if (o.left_curl){
           ribbon.parent().css('left',-o.triangle_width);
           $('<div></div>').addClass('triangle triangle-l').css(
             $.extend({
-      				'border-color': 'transparent ' + dark_color + 'transparent transparent',
-      				'top': (o.direction == 'down') ? ribbon.position().top - parseInt(o.triangle_width) : ribbon.position().top + parseInt(height) - parseInt(o.triangle_width),
-      				'left': ribbon.position().left - o.triangle_width,
-      			  },corner_css)  
+              'border-color': 'transparent ' + dark_color + 'transparent transparent',
+              'top': (o.direction == 'down') ? ribbon.position().top - parseInt(o.triangle_width) : ribbon.position().top + parseInt(height) - parseInt(o.triangle_width),
+              'left': ribbon.position().left - o.triangle_width,
+            },corner_css)  
           ).appendTo($(ribbon).parent());
         }
         
@@ -54,9 +54,9 @@
           }
           $('<div></div>').addClass('triangle triangle-r').css(
             $.extend({
-      				'border-color': 'transparent transparent transparent '+ dark_color,
-      				'top': (o.direction == 'down')? ribbon.position().top - o.triangle_width : ribbon.position().top + parseInt(height) - o.triangle_width,
-      				'left': ribbon.position().left + width - (o.triangle_width),
+              'border-color': 'transparent transparent transparent '+ dark_color,
+              'top': (o.direction == 'down')? ribbon.position().top - o.triangle_width : ribbon.position().top + parseInt(height) - o.triangle_width,
+              'left': ribbon.position().left + width - (o.triangle_width),
       			},corner_css)  
           ).appendTo($(ribbon).parent());
         }
