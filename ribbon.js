@@ -7,7 +7,7 @@
         left_curl: true,
         right_curl: true,
         triangle_width: 15,
-    		direction: 'up'
+        direction: 'up'
       }, options);
       return this.each(function() {
         var o = options;								              //params to be used
@@ -22,8 +22,8 @@
           zIndex: '50',
           display: 'inline-block'
         });
-    		
-    		var corner_css = {
+            		
+        var corner_css = {
       	  'border-style': 'solid',
       	  'border-width': o.triangle_width + 'px',
       	  'height': '0px',
