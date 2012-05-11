@@ -9,12 +9,16 @@
 	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	    <script type="text/javascript" src="./ribbon.js"></script>
 		<style type="text/css">
+            body{
+
+            }
 			.widget {
-				background:blue;
+				background:#00bfff;
 				width:300px;
-				height:50px;
+				height:100px;
 				margin:0px 0px 30px 100px;
 				padding:20px 0px 0px 0px;
+                float: left;
 			}
 			h1{
 				font-size:25px;
@@ -36,7 +40,14 @@
 				width:278px;
 				border:1px solid black;
 			}
-			
+            #ribbon9{
+                background-color: #7fffd4;
+                text-align: center;
+            }
+            #ribbon10{
+                background-color: #ffa07a;
+
+            }
 		</style>
 		<script type="text/javascript">
 			$(function(){	//jquery wrapper
@@ -45,10 +56,10 @@
 					direction: 'down'
 				});
 				$('#ribbon3').ribbon({
-					left_curl:false
+					ends:'right'
 				});	
 				$('#ribbon4').ribbon({
-					right_curl:false
+					ends:'left'
 				});
 				$('#ribbon5').ribbon({
 					triangle_width: 8
@@ -56,7 +67,14 @@
 				$('#ribbon6').ribbon({
 					triangle_width: 25
 				});
-				$('#ribbon7').ribbon();		
+				$('#ribbon7').ribbon();
+                $('#ribbon8').ribbon();
+                $('#ribbon9').ribbon({
+                    shadow: false
+                });
+                $('#ribbon10').ribbon({
+                    shadow: '0 5px 5px rgba(0,0,0,0.8)'
+                });
 			});
 		</script>
     </head>
@@ -83,6 +101,15 @@
 			<div class="widget" id="widget7">
 				<h1 id="ribbon7">Ribbon contains some padding and a border</h1>
 			</div>
+            <div class="widget" id="widget8">
+                <h1 id="ribbon8">No Background</h1>
+            </div>
+            <div class="widget" id="widget9">
+                <h1 id="ribbon9">No Shadow, Centered</h1>
+            </div>
+            <div class="widget" id="widget10">
+                <h1 id="ribbon10">Darker Shadow</h1>
+            </div>
         </div>
     </body>
 </html>

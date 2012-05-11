@@ -1,87 +1,143 @@
-(function($){  
-  $.fn.extend({
-    ribbon: function(options) {
+(function($){
+  $.fn.ribbon = function(options){
+    return this.each(function() {
+      var ribbon = new Ribbon(this, options);
+      ribbon.render();
+    });
+  }
+    function Ribbon(element,options){
 
-      var options =  $.extend({
+      this.element = $(element);
+      this.width = this.element.outerWidth();
+      this.height = this.element.outerHeight();
+      this.options = $.extend({
         darken_by: 20,
-        left_curl: true,
-        right_curl: true,
+        ends: 'both',
         triangle_width: 15,
-        direction: 'up'
-      }, options);
-      return this.each(function() {
-        var o = options;								              //params to be used
-        var ribbon = $(this);							            //root item to be "ribbon-ed"                
-        var color = ribbon.css('backgroundColor');	  //background colour of root item
-        var height = ribbon.outerHeight();			      //height, including any padding, margins and borders		
-        var width = ribbon.outerWidth();				      //width, including any padding, margins and borders
-        var dark_color = darken(color,o.darken_by);
-        ribbon.wrap('<div class="rectangle"></div>');	//add container to ribbon to group triangles
-        ribbon.parent().css({
+        direction: 'up',
+        shadow: '0 5px 5px rgba(0,0,0,0.5)'
+      },options);
+
+      this.dark_color = this.darken(this.element.css('backgroundColor'), this.options.darken_by);
+    }
+
+    Ribbon.prototype = {
+      render: function render(){
+        var container = this.buildContainer(),
+            width = $(this.element).width();
+
+        width += this.options.triangle_width * (this.options.ends === 'both'? 2 : 1);
+        this.element.css('width',width);
+        if(this.options.shadow){
+          this.addShadow();
+        }
+        this.element.replaceWith(
+            container.append(
+                this.addEnds(container,this.options.ends)).append(this.element.clone()
+            )
+        );
+      },
+
+      buildContainer: function buildContainer(){
+        var container = $('<div class="rectangle"></div>');
+        container.css({
           position: 'relative',
           zIndex: '50',
           display: 'inline-block'
         });
-            		
-        var corner_css = {
-      	  'border-style': 'solid',
-      	  'border-width': o.triangle_width + 'px',
-      	  'height': '0px',
-      	  'width': '0px',
-      	  'position': 'absolute',
-      	  'z-index': '-1'
-      	};
-    		
-        if ((o.left_curl) && (o.right_curl)){
-          ribbon.css('width',ribbon.width() + (2*o.triangle_width));
-          width = ribbon.outerWidth();					    //reset width now that corners are accounted for
-        }
+        return container;
+      },
 
-        if (o.left_curl){
-          ribbon.parent().css('left',-o.triangle_width);
-          $('<div></div>').addClass('triangle triangle-l').css(
-            $.extend({
-              'border-color': 'transparent ' + dark_color + 'transparent transparent',
-              'top': (o.direction == 'down') ? ribbon.position().top - parseInt(o.triangle_width) : ribbon.position().top + parseInt(height) - parseInt(o.triangle_width),
-              'left': ribbon.position().left - o.triangle_width,
-            },corner_css)  
-          ).appendTo($(ribbon).parent());
-        }
-        
-        if (o.right_curl){
-          if (!o.left_curl){
-            ribbon.parent().css('right',-o.triangle_width);
-          }
-          $('<div></div>').addClass('triangle triangle-r').css(
-            $.extend({
-              'border-color': 'transparent transparent transparent '+ dark_color,
-              'top': (o.direction == 'down')? ribbon.position().top - o.triangle_width : ribbon.position().top + parseInt(height) - o.triangle_width,
-              'left': ribbon.position().left + width - (o.triangle_width),
-            },corner_css)  
-          ).appendTo($(ribbon).parent());
-        }
-      });
-      
-      // convert hex to rgb
-      function hex2rgb(hex) {
-        hex = (hex.substr(0,1)=="#") ? hex.substr(1) : hex;
-        return 'rgb('+parseInt(hex.substr(0,2), 16) + ','+ parseInt(hex.substr(2,2), 16)+ ',' + parseInt(hex.substr(4,2), 16) + ')';
-      }
+      addEnds: function addEnds(container,ends){
+        var end;
+        switch(ends){
+          case this.ends.left:
+            $(container).css('left',-1 * this.options.triangle_width );
+            return $('<div></div>').addClass('triangle triangle-l').css(
+                $.extend(
+                    {
+                      borderColor: 'transparent ' + this.dark_color + ' transparent transparent',
+                      left:  -1 * this.options.triangle_width
+                    },
+                    this.endCss(),
+                    this.endDirectionCss()
+                ));
+          case this.ends.right:
+            return end = $('<div></div>').addClass('triangle triangle-r').css(
+                $.extend(
+                    {
+                      borderColor: 'transparent transparent transparent ' + this.dark_color,
+                      right: -1 * this.options.triangle_width
+                    },
+                    this.endCss(),
+                    this.endDirectionCss()
+                ));
 
-    	//darkden a given colour by a percentage
-      function darken(color,percentage){
-        var local_color = color;
-        var deduction = Math.round(255 * (percentage / 100));
+          case this.ends.both:
+            return this.addEnds(container,this.ends.left).after(this.addEnds(container,this.ends.right));
+        }
+        return end;
+      },
+
+      addShadow: function addShadow(){
+        this.element.css({
+           '-moz-box-shadow': this.options.shadow,
+          '-webkit-box-shadow': this.options.shadow,
+          'box-shadow': this.options.shadow
+        });
+      },
+
+      endCss: function endCss(){
+        return  {
+          borderStyle: 'solid',
+          borderWidth: this.options.triangle_width ,
+          height: '0px',
+          width: '0px',
+          position: 'absolute',
+          zIndex: '-1'
+        };
+      },
+
+      endDirectionCss: function endDirectionCss(){
+        switch(this.options.direction){
+          case 'down':
+            return {top: -1 * this.options.triangle_width};
+          case 'up':
+            return {bottom: -1 * this.options.triangle_width};
+        }
+      },
+
+      darken: function darken(color,percentage){
+        var local_color = color,
+            deduction = Math.round(255 * (percentage / 100)),
+            parts = new Array(), r, g, b;
+
         if (color.charAt(0)=='#'){
-            local_color = hex2rgb(color.substring(1));
+          local_color = this.hex2rgb(color.substring(1));
         }
-        var parts = new Array();
-        parts = local_color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-        var r = (parts[1] - deduction > 0) ? parts[1] - deduction : 0;
-        var g = (parts[2] - deduction > 0) ? parts[2] - deduction : 0;
-        var b = (parts[3] - deduction > 0) ? parts[3] - deduction : 0;
+        if(parts = local_color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)){
+          r = (parts[1] - deduction > 0) ? parts[1] - deduction : 0;
+          g = (parts[2] - deduction > 0) ? parts[2] - deduction : 0;
+          b = (parts[3] - deduction > 0) ? parts[3] - deduction : 0;
+        }else{
+          r = g = b = 256;
+        }
+
         return 'rgb('+r+','+g+','+b+')';
+      },
+
+      hex2rgb: function hex2rgb(hex){
+        var hex = (hex.substr(0,1)=="#") ? hex.substr(1) : hex;
+        return 'rgb('+parseInt(hex.substr(0,2), 16) + ','+
+            parseInt(hex.substr(2,2), 16)+ ',' +
+            parseInt(hex.substr(4,2), 16) + ')';
+      },
+
+      ends: {
+        both:   'both',
+        left:   'left',
+        right:  'right'
       }
     }
-  });
+
 })(jQuery);
