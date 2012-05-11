@@ -9,11 +9,6 @@ Required CSS:
 - The element should be positioned relative or absolute.
 - The element should have a background-colour declared.
 
-Optional CSS:
-- define a shadow on the element to provide depth. 
-	The plugin does not add any shadows as to not
-	conflict with existing lighting models.
-
 Default Usage:
 $('{selector}').ribbon();
 
@@ -23,10 +18,10 @@ darken_by: integer
 This represents a percentage to darken the ribbon fold.
 The default is 20 (%).
 
-left_curl, right_curl: boolean
-Setting this to false will prevent the ribbon from curling under
-on the given side.
-The default for both is true.
+ends: string
+identify which 'ends' are to be added to the ribbon.
+Options: ['both','left','right']
+The default is 'both'
 
 triangle_width: integer
 This defines the size of the triangle, in pixels.
