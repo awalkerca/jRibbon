@@ -7,7 +7,7 @@
         <title>Ribbon Samples</title>
 				    <!--javascript  -->
 	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-	    <script type="text/javascript" src="./ribbon.js"></script>
+	    <script type="text/javascript" src="./ribbon.min.js"></script>
 		<style type="text/css">
             body{
 
@@ -48,6 +48,23 @@
                 background-color: #ffa07a;
 
             }
+            #ribbon11{
+                left: -10px;
+                position: relative;
+                background-color: #f0e68c;
+            }
+            #ribbon12{
+                right: 200px;
+                position: absolute;
+                background-color: #ff00ff;
+            }
+            #ribbon13{
+                left: 108px;
+                bottom: 50px;
+                position: fixed;
+                background-color: #00ff7f;
+            }
+
 		</style>
 		<script type="text/javascript">
 			$(function(){	//jquery wrapper
@@ -75,6 +92,9 @@
                 $('#ribbon10').ribbon({
                     shadow: '0 5px 5px rgba(0,0,0,0.8)'
                 });
+                $('#ribbon11').ribbon();
+                $('#ribbon12').ribbon();
+                $('#ribbon13').ribbon();
 			});
 		</script>
     </head>
@@ -110,6 +130,16 @@
             <div class="widget" id="widget10">
                 <h1 id="ribbon10">Darker Shadow</h1>
             </div>
+            <div class="widget" id="widget11">
+                <h1 id="ribbon11">Relatively positioned to the left</h1>
+            </div>
+            <div class="widget" id="widget12">
+                <h1 id="ribbon12">Absolutely positioned</h1>
+            </div>
+            <div class="widget" id="widget13">
+                <h1 id="ribbon13">Fixed positioned</h1>
+            </div>
+
         </div>
     </body>
 </html>
